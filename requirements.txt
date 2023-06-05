@@ -1,1 +1,5 @@
 clipboard~=0.0.4
+PyGetWindow~=0.0.9
+PyAutoGUI~=0.9.54
+keyboard~=0.13.5
+pygame~=2.4.0
