@@ -1,3 +1,4 @@
+import platform
 import time
 
 import clipboard
@@ -10,9 +11,9 @@ class ClipboardTrigger(AbstractTrigger):
     def monitor(self) -> None:
         while True:
             text = clipboard.paste()
-            window_title = ""  # todo
+            window_title = self._get_active_window_title()
 
             if text != self.least_recently_text:
                 self.callback(text, window_title, EventType.ON_UPDATED_TEXT)
 
-            time.sleep(0.25)
+            time.sleep(0.125)

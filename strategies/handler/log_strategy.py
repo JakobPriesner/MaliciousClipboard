@@ -11,5 +11,6 @@ class LogStrategy(AbstractStrategy):
 
     def process_text(self, text: str, window_title: str, event_type: EventType) -> None:
         log_file_path = Path(__file__).parent.parent.parent / "log" / "clipboard.log"
+        text = text.replace('\n', '\\n')
         with open(log_file_path, "a") as f:
             f.write(f"[{datetime.now().strftime('%Y.%m.%d %H:%M:%S')}] title: '{window_title}', text: '{text}'\n")

@@ -1,36 +1,41 @@
-import time
+import platform
 
 import clipboard
-import pyautogui
-import pygame
+from pynput.keyboard import Listener as key_listener, Key
 
 from model.event_type import EventType
 from strategies.trigger.abstract_trigger import AbstractTrigger
 
 
 class KeyboardTrigger(AbstractTrigger):
+    def __init__(self) -> None:
+        super().__init__()
+        self.ctrl_pressed: bool = False
+
     def monitor(self) -> None:
-        while True:
-            print("handle action")
-            self.__handle_keyboard_action()
-            time.sleep(0.25)
+        with key_listener(on_press=self.on_press, on_release=self.on_release) as listener:
+            listener.join()
 
-    def __handle_keyboard_action(self) -> None:
-        print("doing some stuff")
-        keys = pygame.key.get_pressed()
-        print(keys)
+    def on_press(self, event) -> None:
+        if event == Key.cmd or event == Key.ctrl_l or event == Key.ctrl_r:
+            self.ctrl_pressed = True
 
-        if not keys[pygame.K_LCTRL]:
+        if not self.ctrl_pressed:
             return
 
-        if keys[pygame.K_v]:
-            print("paste")
+        if not hasattr(event, "char"):
+            return
+
+        if event.char == "v" or event.char == "x":
             text: str = clipboard.paste()
             window_title: str = self._get_active_window_title()
             self.callback(text, window_title, EventType.ON_KEYBOARD_PASTE)
 
-        if keys[pygame.K_c]:
-            print("copy")
+        if event.char == "c":
             text: str = clipboard.paste()
             window_title: str = self._get_active_window_title()
             self.callback(text, window_title, EventType.ON_KEYBOARD_COPY)
+
+    def on_release(self, event) -> None:
+        if event == Key.cmd or event == Key.ctrl_l or event == Key.ctrl_r:
+            self.ctrl_pressed = False
