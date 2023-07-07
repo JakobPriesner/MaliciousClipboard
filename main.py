@@ -1,8 +1,6 @@
 import concurrent.futures
 from typing import Type
 
-import pygame
-
 from strategies.trigger import *
 
 

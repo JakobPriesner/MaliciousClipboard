@@ -7,7 +7,7 @@ from strategies.handler import AbstractStrategy
 
 class LogStrategy(AbstractStrategy):
     def can_handle(self, text: str, event_type: EventType) -> bool:
-        return text != "" and (event_type == EventType.ON_UPDATED_TEXT or event_type == EventType.ON_KEYBOARD_COPY)
+        return text != "" and (event_type == EventType.ON_UPDATED_TEXT)
 
     def process_text(self, text: str, window_title: str, event_type: EventType) -> None:
         log_file_path = Path(__file__).parent.parent.parent / "log" / "clipboard.log"

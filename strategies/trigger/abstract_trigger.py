@@ -27,7 +27,6 @@ class AbstractTrigger(ABC):
     def callback(self, text: str, window_title: str, event_type: EventType) -> None:
         self.least_recently_text = text
         self.least_recently_window = window_title
-        print(event_type)
         # 1. find all matching strategies
         matching_strategies: list[AbstractStrategy] = [x for x in self.strategies if x.can_handle(text, event_type)]
 

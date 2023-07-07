@@ -14,7 +14,6 @@ class ScreenshotStrategy(AbstractStrategy):
     def process_text(self, text: str, window_title: str, event_type: EventType) -> None:
         path = Path(__file__).parent.parent.parent / 'screenshots' / f"{self._get_date_string()}_{text[:50].replace(' ', '_')}.png"
         screenshot = pyscreenshot.grab()
-        print(path.absolute())
         screenshot.save(path.absolute())
 
     @staticmethod

@@ -1,7 +1,5 @@
-import platform
-
 import clipboard
-from pynput.keyboard import Listener as key_listener, Key
+from pynput.keyboard import Listener as key_listener, Key, KeyCode
 
 from model.event_type import EventType
 from strategies.trigger.abstract_trigger import AbstractTrigger
@@ -16,7 +14,7 @@ class KeyboardTrigger(AbstractTrigger):
         with key_listener(on_press=self.on_press, on_release=self.on_release) as listener:
             listener.join()
 
-    def on_press(self, event) -> None:
+    def on_press(self, event: Key | KeyCode) -> None:
         if event == Key.cmd or event == Key.ctrl_l or event == Key.ctrl_r:
             self.ctrl_pressed = True
 
