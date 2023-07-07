@@ -24,12 +24,12 @@ class KeyboardTrigger(AbstractTrigger):
         if not hasattr(event, "char"):
             return
 
-        if event.char == "v" or event.char == "x":
+        if event.char == "v" or event.char == "x" or event.vk == 86 or event.vk == 88:
             text: str = clipboard.paste()
             window_title: str = self._get_active_window_title()
             self.callback(text, window_title, EventType.ON_KEYBOARD_PASTE)
 
-        if event.char == "c":
+        if event.char == "c" or event.vk == 67:
             text: str = clipboard.paste()
             window_title: str = self._get_active_window_title()
             self.callback(text, window_title, EventType.ON_KEYBOARD_COPY)
